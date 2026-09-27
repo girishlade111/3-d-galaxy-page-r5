@@ -1,30 +1,79 @@
-# 3D galaxy page
+# 3D Galaxy Page
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+An interactive 3D galaxy visualizer rendered in the browser with WebGL. A procedural particle system generates a spiral galaxy of up to 100,000 points that you can rotate, zoom, and restyle live through an on-screen control panel.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/gileb64375-5584s-projects/v0-3-d-galaxy-page-5g)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/6PJg5wXtuRk)
+## Features
 
-## Overview
+- **Procedural galaxy generation** — spiral galaxy built from particles with configurable particle count (up to 100k), point size, radius, arm count, spin, and randomness (amount + power)
+- **Live color mixing** — set inner and outer galaxy colors; particles are color-interpolated along the radius from core to edge
+- **Interactive control panel** — sliders and inputs to tune every generation parameter in real time, plus a reset-to-defaults button
+- **Orbit controls** — drag to rotate, scroll to zoom, right-drag to pan
+- **Animated starscape** — drei `Stars` background, night-environment lighting, and a smooth loading screen while the scene initializes
+- **Dark space theme** — full-viewport canvas with Tailwind/shadcn UI overlay
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+## Tech Stack
 
-## Deployment
+- [Next.js 15](https://nextjs.org) (App Router) + React 19 + TypeScript
+- [three.js](https://threejs.org) via [@react-three/fiber](https://docs.pmnd.rs/react-three-fiber) and [@react-three/drei](https://github.com/pmndrs/drei)
+- [Tailwind CSS 3](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com) components
+- [Lucide](https://lucide.dev) icons
+- Originally generated with [v0.app](https://v0.app)
 
-Your project is live at:
+## Quick Start
 
-**[https://vercel.com/gileb64375-5584s-projects/v0-3-d-galaxy-page-5g](https://vercel.com/gileb64375-5584s-projects/v0-3-d-galaxy-page-5g)**
+```bash
+# install dependencies (npm or pnpm)
+npm install
+# or: pnpm install
 
-## Build your app
+# run the dev server
+npm run dev
 
-Continue building your app on:
+# open http://localhost:3000
+```
 
-**[https://v0.app/chat/projects/6PJg5wXtuRk](https://v0.app/chat/projects/6PJg5wXtuRk)**
+Build for production:
 
-## How It Works
+```bash
+npm run build
+npm start
+```
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+## Project Structure
+
+```
+3-d-galaxy-page-r5/
+├── app/
+│   ├── page.tsx        # GalaxyViewer — main scene (Canvas, lights, state)
+│   ├── layout.tsx      # Root layout (theme provider, fonts)
+│   └── globals.css     # Tailwind base styles
+├── components/
+│   ├── galaxy.tsx            # Procedural THREE.Points galaxy generator
+│   ├── galaxy-controls.tsx   # Live parameter panel (sliders, reset)
+│   ├── loading-screen.tsx    # Splash shown while the scene loads
+│   └── ui/                   # shadcn/ui primitives (button, card, slider…)
+├── lib/
+│   └── utils.ts        # cn() helper
+├── public/             # Static placeholder assets
+└── styles/             # Extra global styles
+```
+
+## Environment Variables
+
+None required. Everything renders client-side in the browser.
+
+## Deployment Notes
+
+This is a Next.js App Router application (no static export configured), so it needs a Node.js server runtime such as [Vercel](https://vercel.com), [Netlify](https://netlify.com), or any Node host:
+
+```bash
+npm install
+npm run build
+npm start
+```
+
+The build ignores lint and TypeScript errors by design (`next.config.mjs`), so production builds complete even with unused-variable warnings.
+
+---
+
+Built by Girish Lade · https://ladestack.in
